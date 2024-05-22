@@ -1,19 +1,35 @@
+using LandSoft.API.BuilderExtensions;
+using LandSoft.Data.EF;
+using LandSoft.Data.EF.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+#region Register service 
+builder.Services.AddDbContext<LSDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), 
+                                                                        o => o.MigrationsAssembly("LandSoft.Data.EF")));
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureMapper();
+#endregion Register service
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
+}
+
+using(var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<LSDbContext>();
+    var initializer = services.GetRequiredService<DbInitializer>();
+    initializer.Seed().Wait();
 }
 
 app.UseHttpsRedirection();

@@ -4,7 +4,7 @@ using LandSoft.Infrastructure.SharedKernel;
 
 namespace LandSoft.Data.Entities
 {
-	public class Bill : DomainEntity<int>, ISwitchable, IDateTracking
+	public class BillForService : DomainEntity<int>, ISwitchable, IDateTracking
 	{
 		public string Name { get; set; }
 		public decimal Price { get; set; }
@@ -13,5 +13,7 @@ namespace LandSoft.Data.Entities
 		public string CreatedBy { get; set; }
 		public DateTime UpdatedAt { get; set; }
 		public string UpdatedBy { get; set; }
+
+		public List<DetailBillForService> DetailBillForServices { get; set; }
 	}
 }

@@ -9,6 +9,7 @@ namespace LandSoft.Data.EF.Configurations
 		public void Configure(EntityTypeBuilder<AppUser> builder)
 		{
 			builder.ToTable("Users");
+			builder.HasMany(x => x.DetailBillForServices).WithOne(x => x.AppUser).HasForeignKey(x => x.AppUserId);
 		}
 	}
 }

@@ -4,11 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LandSoft.Data.EF.Configurations
 {
-	public class BillConfiguration : IEntityTypeConfiguration<Bill>
+	public class BillConfiguration : IEntityTypeConfiguration<BillForService>
 	{
-		public void Configure(EntityTypeBuilder<Bill> builder)
+		public void Configure(EntityTypeBuilder<BillForService> builder)
 		{
 			builder.ToTable("Bills");
+			builder.HasKey(x => x.Id);
+			builder.Property(x => x.Price).HasColumnType("decimal(10,0)");
 		}
 	}
 }

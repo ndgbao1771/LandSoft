@@ -9,6 +9,8 @@ namespace LandSoft.Data.EF.Configurations
 		public void Configure(EntityTypeBuilder<Room> builder)
 		{
 			builder.ToTable("Rooms");
+			builder.HasKey(x => x.Id);
+			builder.Property(x => x.Price).HasColumnType("decimal(10,0)");
 		}
 	}
 }

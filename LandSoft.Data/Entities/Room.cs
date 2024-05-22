@@ -16,5 +16,15 @@ namespace LandSoft.Data.Entities
 		public string CreatedBy { get; set; }
 		public DateTime UpdatedAt { get; set; }
 		public string UpdatedBy { get; set; }
+
+        public int? AreaId { get; set; }
+        public Area? Area { get; set; }
+
+		public List<RentalContract>? RentalContracts { get; set; }
+
+		public List<DetailBillForRoomPerMonth>? DetailBillForRoomPerMonths { get; set; }
+
+		public List<Device>? Devices { get; set; }
+
 	}
 }

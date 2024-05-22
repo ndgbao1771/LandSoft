@@ -1,12 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LandSoft.Infrastructure.Interfaces;
 
 namespace LandSoft.Data.EF
 {
-	internal class EFUnitOfWork
+	public class EFUnitOfWork : IUnitOfWork
 	{
-	}
+		private readonly LSDbContext _context;
+
+        public EFUnitOfWork(LSDbContext context)
+        {
+            _context = context;
+        }
+
+        public void Commit()
+        {
+            _context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
+    }
 }
