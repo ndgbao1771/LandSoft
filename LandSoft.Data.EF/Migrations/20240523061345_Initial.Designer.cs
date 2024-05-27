@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LandSoft.Data.EF.Migrations
 {
     [DbContext(typeof(LSDbContext))]
-    [Migration("20240522094506_Initial")]
+    [Migration("20240523061345_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
