@@ -8,8 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 #region Register service 
 builder.Services.AddDbContext<LSDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), 
                                                                         o => o.MigrationsAssembly("LandSoft.Data.EF")));
-builder.Services.ConfigureIdentity();
-builder.Services.ConfigureMapper();
+builder.Services.ConfigureAllServices();
 #endregion Register service
 
 builder.Services.AddControllers();

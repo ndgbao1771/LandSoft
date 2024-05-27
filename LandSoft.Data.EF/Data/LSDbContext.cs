@@ -1,5 +1,6 @@
 ﻿using LandSoft.Data.EF.ExtensionModelBuilder;
 using LandSoft.Data.Entities;
+using LandSoft.Data.EntityViewSQL;
 using LandSoft.Data.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,10 @@ namespace LandSoft.Data.EF
         public DbSet<Room> Rooms { get; set; }
 		public DbSet<Service> Services { get; set; }
 		#endregion Register DbSet
+
+		#region Register DbSet ViewSQL
+		public DbSet<AreaViewSQL> areaViewSQLs { get; set; }
+		#endregion Register DbSet ViewSQL
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{

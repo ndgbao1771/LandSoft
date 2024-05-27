@@ -4,7 +4,14 @@ namespace LandSoft.Data.Entities
 {
     public class Area : DomainEntity<int>
     {
-        public string Name { get; set; }
+		public Area() { }
+		public Area(int id, string name)
+		{
+			Id = id;
+			Name = name;
+		}
+
+		public string Name { get; set; }
         public List<Room>? Rooms { get; set; }
     }
 }

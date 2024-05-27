@@ -1,17 +1,23 @@
 ﻿using AutoMapper;
 using LandSoft.API.AutoMappers;
+using LandSoft.API.Implements;
+using LandSoft.API.Interfaces;
 using LandSoft.Data.EF;
 using LandSoft.Data.EF.Data;
+using LandSoft.Data.EF.Repositories;
 using LandSoft.Data.Entities;
+using LandSoft.Data.IRepositories;
+using LandSoft.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace LandSoft.API.BuilderExtensions
 {
     public static class ServiceConfiguration
     {
-        public static void ConfigureIdentity(this IServiceCollection services)
+        public static void ConfigureAllServices(this IServiceCollection services)
         {
-            services.AddIdentity<AppUser, AppRole>(option => option.SignIn.RequireConfirmedAccount = false)
+			#region Configuration Identity
+			services.AddIdentity<AppUser, AppRole>(option => option.SignIn.RequireConfirmedAccount = false)
                     .AddEntityFrameworkStores<LSDbContext>()
                     .AddDefaultTokenProviders();
 
@@ -34,12 +40,18 @@ namespace LandSoft.API.BuilderExtensions
             services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<DbInitializer>();
-        }
-
-        public static void ConfigureMapper(this IServiceCollection services)
-        {
-            services.AddAutoMapper(typeof(AutoMapperConfig));
-            services.AddScoped<IMapper>(am => new Mapper(am.GetRequiredService<AutoMapper.IConfigurationProvider>(), am.GetService));
-        }
-    }
+			#endregion Configuration Identity
+			#region Configuration Mapper
+			services.AddAutoMapper(typeof(AutoMapperConfig));
+			services.AddScoped<IMapper>(am => new Mapper(am.GetRequiredService<AutoMapper.IConfigurationProvider>(), am.GetService));
+            #endregion Configuration Mapper
+            #region Configuration Repository Services
+            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+            services.AddTransient<IAreaRepository, AreaRepository>();
+            #endregion Configuration Repository Services
+            #region Configuration Implementation Services
+            services.AddTransient<IAreaService, AreaService>();
+			#endregion Configuration Implementation Services
+		}
+	}
 }
